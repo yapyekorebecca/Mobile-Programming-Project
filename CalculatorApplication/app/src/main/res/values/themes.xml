@@ -6,5 +6,5 @@
         <item name="colorOnPrimary">@color/white</item>
 
     </style>
-    <style name="Theme.MyCalcApp" parent="Base.Theme.CalculatorApplication"/>
+    <style name="Theme.CalculatorApplication" parent="Base.Theme.CalculatorApplication"/>
 </resources>

@@ -10,24 +10,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-<<<<<<<< HEAD:CalculatorApplication/app/src/main/AndroidManifest.xml
         android:theme="@style/Theme.CalculatorApplication"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true">
-========
-        android:theme="@style/Theme.GreetingApp"
-        tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.GreetingApp">
->>>>>>>> 75864eede69b56cfe6bec5af2c4b33871f68bc51:GreetingApp/app/src/main/AndroidManifest.xml
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
