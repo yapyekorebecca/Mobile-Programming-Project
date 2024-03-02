@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey"
+
+    tools:context="MainActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/expression"
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center|right"
+            android:paddingRight="10dp"
+            android:text="expression"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/result"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center|right"
+            android:paddingRight="10dp"
+            android:text="result"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expression" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        style="@style/buttonRow">
+
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:onClick="allclearAction"
+            android:text="AC"
+            android:textColor="@color/red" />
+
+        <Button
+            android:id="@+id/digitOne"
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:onClick="backspaceAction"
+            android:text="⌫"
+            android:textColor="@color/red" />
+        <Button
+            style="@style/buttonDigit"
+            android:text="mm"
+            android:gravity="center"/>
+        <Button
+            style="@style/buttonOperator"
+            android:gravity="center"
+            android:text="/"/>
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/buttonRow">
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="7"/>
+
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="8" />
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="9"/>
+        <Button
+            style="@style/buttonOperator"
+            android:gravity="center"
+
+            android:text="x"/>
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/buttonRow">
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="4"/>
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="5"/>
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="6"/>
+        <Button
+            style="@style/buttonOperator"
+            android:gravity="center"
+            android:text="-"/>
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/buttonRow">
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="1"/>
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="2"/>
+        <Button
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="3"/>
+        <Button
+            style="@style/buttonOperator"
+            android:gravity="center"
+            android:text="+"/>
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/buttonRow">
+
+        <Button
+            android:id="@+id/zero"
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="0"/>
+        <Button
+            android:id="@+id/point"
+            style="@style/buttonDigit"
+            android:gravity="center"
+            android:text="."/>
+
+        <Button
+            style="@style/buttonDigit"
+            android:layout_weight="2"
+            android:background="@color/orange"
+            android:text="="
+            android:onClick="equalsAction"
+            android:textColor="#616161"
+            android:gravity="center"
+            android:textSize="40sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
