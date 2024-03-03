@@ -23,7 +23,7 @@
             android:gravity="center|end"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="@string/expression"
+            android:text=""
             android:textColor="#EFEBE9"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/result"
@@ -32,24 +32,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:inputType="number"
             android:id="@+id/result"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="12dp"
             android:gravity="center|end"
+            android:importantForAutofill="no"
+            android:inputType="number"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            tools:ignore="LabelFor"
-            android:text="@string/result"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expression"
-            android:importantForAutofill="no" />
+            tools:ignore="LabelFor,SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         style="@style/buttonRow">
@@ -66,7 +66,7 @@
         <Button
 
             android:id="@+id/btnBS"
-            style="@style/buttonDigit"
+            style="@style/buttonDigits"
             android:gravity="center"
             android:onClick="backspaceAction"
             android:text="@string/backSpace"
