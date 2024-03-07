@@ -1,0 +1,84 @@
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:background=\"@color/grey\"\r\n\r\n    tools:context=\"MainActivity\">\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_weight=\"2\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/expression\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"73dp\"\r\n            android:layout_marginTop=\"50dp\"\r\n            android:layout_marginBottom=\"2dp\"\r\n            android:gravity=\"center|right\"\r\n            android:paddingRight=\"10dp\"\r\n            android:text=\"expression\"\r\n            android:textSize=\"30dp\"\r\n            app:layout_constraintBottom_toTopOf=\"@+id/result\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/result\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"72dp\"\r\n            android:layout_marginTop=\"2dp\"\r\n            android:layout_marginBottom=\"12dp\"\r\n            android:gravity=\"center|right\"\r\n            android:paddingRight=\"10dp\"\r\n            android:text=\"result\"\r\n            android:textColor=\"@color/white\"\r\n            android:textSize=\"25dp\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/expression\" />\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n    <LinearLayout\r\n        style=\"@style/buttonRow\">\r\n\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:onClick=\"allclearAction\"\r\n            android:text=\"AC\"\r\n            android:textColor=\"@color/red\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/digitOne\"\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:onClick=\"backspaceAction\"\r\n            android:text=\"⌫\"\r\n            android:textColor=\"@color/red\" />\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:text=\"mm\"\r\n            android:gravity=\"center\"/>\r\n        <Button\r\n            style=\"@style/buttonOperator\"\r\n            android:gravity=\"center\"\r\n            android:text=\"/\"/>\r\n\r\n    </LinearLayout>\r\n    <LinearLayout\r\n        style=\"@style/buttonRow\">\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"7\"/>\r\n\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"8\" />\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"9\"/>\r\n        <Button\r\n            style=\"@style/buttonOperator\"\r\n            android:gravity=\"center\"\r\n\r\n            android:text=\"x\"/>\r\n\r\n    </LinearLayout>\r\n    <LinearLayout\r\n        style=\"@style/buttonRow\">\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"4\"/>\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"5\"/>\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"6\"/>\r\n        <Button\r\n            style=\"@style/buttonOperator\"\r\n            android:gravity=\"center\"\r\n            android:text=\"-\"/>\r\n\r\n    </LinearLayout>\r\n    <LinearLayout\r\n        style=\"@style/buttonRow\">\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"1\"/>\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"2\"/>\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"3\"/>\r\n        <Button\r\n            style=\"@style/buttonOperator\"\r\n            android:gravity=\"center\"\r\n            android:text=\"+\"/>\r\n\r\n    </LinearLayout>\r\n    <LinearLayout\r\n        style=\"@style/buttonRow\">\r\n\r\n        <Button\r\n            android:id=\"@+id/zero\"\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\"0\"/>\r\n        <Button\r\n            android:id=\"@+id/point\"\r\n            style=\"@style/buttonDigit\"\r\n            android:gravity=\"center\"\r\n            android:text=\".\"/>\r\n\r\n        <Button\r\n            style=\"@style/buttonDigit\"\r\n            android:layout_weight=\"2\"\r\n            android:background=\"@color/orange\"\r\n            android:text=\"=\"\r\n            android:onClick=\"equalsAction\"\r\n            android:textColor=\"#616161\"\r\n            android:gravity=\"center\"\r\n            android:textSize=\"40sp\" />\r\n\r\n\r\n    </LinearLayout>\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 4b931ce257ee66c74c1dab4546535437c6b3ee29)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1709480265147)
+@@ -50,7 +50,6 @@
+         <Button
+             style="@style/buttonDigit"
+             android:gravity="center"
+-            android:onClick="allclearAction"
+             android:text="AC"
+             android:textColor="@color/red" />
+ 
+@@ -58,7 +57,6 @@
+             android:id="@+id/digitOne"
+             style="@style/buttonDigit"
+             android:gravity="center"
+-            android:onClick="backspaceAction"
+             android:text="⌫"
+             android:textColor="@color/red" />
+         <Button
+@@ -152,7 +150,6 @@
+             android:layout_weight="2"
+             android:background="@color/orange"
+             android:text="="
+-            android:onClick="equalsAction"
+             android:textColor="#616161"
+             android:gravity="center"
+             android:textSize="40sp" />
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"VcsDirectoryMappings\">\r\n    <mapping directory=\"$PROJECT_DIR$/..\" vcs=\"Git\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+--- a/.idea/vcs.xml	(revision 4b931ce257ee66c74c1dab4546535437c6b3ee29)
++++ b/.idea/vcs.xml	(date 1709480790561)
+@@ -2,5 +2,6 @@
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
++    <mapping directory="$PROJECT_DIR$/Mobile-Programming-Project" vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetDropDown\">\r\n    <value>\r\n      <entry key=\"app\">\r\n        <State />\r\n      </entry>\r\n    </value>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+--- a/.idea/deploymentTargetDropDown.xml	(revision 4b931ce257ee66c74c1dab4546535437c6b3ee29)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1709480583225)
+@@ -3,7 +3,20 @@
+   <component name="deploymentTargetDropDown">
+     <value>
+       <entry key="app">
+-        <State />
++        <State>
++          <targetSelectedWithDropDown>
++            <Target>
++              <type value="QUICK_BOOT_TARGET" />
++              <deviceKey>
++                <Key>
++                  <type value="VIRTUAL_DEVICE_PATH" />
++                  <value value="C:\Users\SHADIA\.android\avd\Pixel_7_API_28.avd" />
++                </Key>
++              </deviceKey>
++            </Target>
++          </targetSelectedWithDropDown>
++          <timeTargetWasSelectedWithDropDown value="2024-03-03T15:18:10.359598500Z" />
++        </State>
+       </entry>
+     </value>
+   </component>
