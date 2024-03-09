@@ -6,9 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 
 import android.os.Bundle
 
- 
+
 
 import android.widget.Button
+import android.widget.EditText
 
 import android.widget.TextView
 
@@ -16,9 +17,9 @@ import android.widget.Toast
 
 import net.objecthunter.exp4j.ExpressionBuilder
 
- 
 
- 
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -131,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         expression = findViewById(R.id.expression)
 
         result = findViewById(R.id.result)
+
 
  
 
