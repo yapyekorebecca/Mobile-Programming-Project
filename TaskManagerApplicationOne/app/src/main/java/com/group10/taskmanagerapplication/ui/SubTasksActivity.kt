@@ -1,11 +1,9 @@
 package com.group10.taskmanagerapplication.ui
 
 import SubtasksAdapter
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -15,12 +13,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
 //import com.google.firebase.firestore.FirebaseFirestore
 import com.group10.taskmanagerapplication.R
 //import com.group10.taskmanagerapplication.ui.SubtasksAdapter
@@ -32,12 +27,11 @@ class SubTasksActivity : AppCompatActivity() {
     private lateinit var addSubtaskButton: Button
     private lateinit var attachmentIcon: ImageView
     private lateinit var adapter: SubtasksAdapter
-    private lateinit var attachedFileTextView: TextView
     private val subtasksList = mutableListOf<String>()
-    private val FILE_URI_KEY = "file_uris_key"
-    private val READ_EXTERNAL_STORAGE_PERMISSION_REQUEST = 100
+    private lateinit var attachedFileTextView:TextView
 
-    //private val FILE_PICKER_REQUEST_CODE = 1001
+    private val FILE_PICKER_REQUEST_CODE = 1001
+    private val FILE_URI_KEY = "file_uri_key"
 
     private val sharedPrefs by lazy {
         getSharedPreferences("Subtasks", Context.MODE_PRIVATE)
@@ -61,7 +55,11 @@ class SubTasksActivity : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 data?.data?.let { uri ->
-                    addSelectedFileUri(uri)
+                    // Get the file name from the URI
+                    val fileName = getFileNameFromUri(uri)
+                    // Update the TextView with the file name
+                    attachedFileTextView.text = fileName
+                    attachedFileTextView.visibility = View.VISIBLE // Make the TextView visible
                 }
             }
         }
@@ -69,18 +67,24 @@ class SubTasksActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_tasks)
+        // Retrieve task name, start date, and end date passed from MainActivity
+        taskName = intent.getStringExtra("taskName") ?: ""
+
 
         // Retrieve task name passed from MainActivity
         taskName = intent.getStringExtra("taskName") ?: ""
+        val subtaskTitle = findViewById<TextView>(R.id.subtaskTitle)
+        subtaskTitle.text = taskName
 
         // Set up RecyclerView
         subtasksRecyclerView = findViewById(R.id.subtasksRecyclerView)
         subtasksRecyclerView.layoutManager = LinearLayoutManager(this)
-
+       attachedFileTextView=findViewById(R.id.attachedFileTextView)
+        subtasksRecyclerView = findViewById(R.id.subtasksRecyclerView)
+        subtasksRecyclerView.layoutManager = LinearLayoutManager(this)
         // Initialize the adapter with empty list
         adapter = SubtasksAdapter(subtasksList)
         subtasksRecyclerView.adapter = adapter
-
         // Find the "Add Subtask" button
         addSubtaskButton = findViewById(R.id.addSubtaskButton)
         // Find the attachment icon ImageView
@@ -93,9 +97,18 @@ class SubTasksActivity : AppCompatActivity() {
             intent.putExtra("taskName", taskName)
             startAddSubtaskActivityForResult.launch(intent)
         }
+        // Fetch and display subtasks associated with the task
+        fetchSubtasksFromSharedPreferences()
+        val storedFileUri = sharedPrefs.getString(FILE_URI_KEY, null)
+        storedFileUri?.let {
+            // If a file URI is stored, update the TextView with the file name
+            val fileName = getFileNameFromUri(Uri.parse(it))
+            attachedFileTextView.text = fileName
+            attachedFileTextView.visibility = View.VISIBLE // Make the TextView visible
+        }
         // Set OnClickListener for the attachment icon
         attachmentIcon.setOnClickListener {
-            // Open file picker or attachment dialog here
+            // Launch file picker activity using the filePickerActivityResult launcher
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*" // Allow any type of file to be selected
             filePickerActivityResult.launch(intent)
@@ -123,6 +136,41 @@ class SubTasksActivity : AppCompatActivity() {
         // Notify the adapter of the data change
         adapter.notifyDataSetChanged()
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.let { uri ->
+                // Store the selected file URI in SharedPreferences
+                sharedPrefs.edit {
+                    putString(FILE_URI_KEY, uri.toString())
+                }
+
+                // Get the file name from the URI
+                val fileName = getFileNameFromUri(uri)
+                // Update the TextView with the file name
+                attachedFileTextView.text = fileName
+                attachedFileTextView.visibility = View.VISIBLE // Make the TextView visible
+            }
+        }
+    }
+    private fun getFileNameFromUri(uri: Uri): String {
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        var displayName = ""
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val index = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (index != -1) {
+                    displayName = it.getString(index)
+                } else {
+                    // Handle case where DISPLAY_NAME column doesn't exist
+                    // For example, provide a default name or show an error message
+                }
+            }
+        }
+        return displayName
+    }
+
 
     private fun saveSubtaskToSharedPreferences(subtaskName: String) {
         // Retrieve existing subtasks from SharedPreferences
@@ -137,68 +185,5 @@ class SubTasksActivity : AppCompatActivity() {
                 putStringSet(taskName, it)
             }
         }
-    }
-    private fun addSelectedFileUri(uri: Uri) {
-        val existingUris = sharedPrefs.getStringSet(FILE_URI_KEY, mutableSetOf()) ?: mutableSetOf()
-        existingUris.add(uri.toString())
-        sharedPrefs.edit {
-            putStringSet(FILE_URI_KEY, existingUris)
-        }
-        updateAttachedFilesUI(existingUris)
-
-        // Upload file URI to Firestore
-        uploadFileToDatabase(uri)
-    }
-    private fun updateAttachedFilesUI(uris: Set<String>) {
-        attachedFileTextView.text = ""
-        uris.forEach { uriString ->
-            val uri = Uri.parse(uriString)
-            val fileName = getFileNameFromUri(uri)
-            attachedFileTextView.append("$fileName\n")
-        }
-        attachedFileTextView.visibility = if (uris.isNotEmpty()) View.VISIBLE else View.GONE
-    }
-    private fun requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                READ_EXTERNAL_STORAGE_PERMISSION_REQUEST
-            )
-        }
-    }
-    private fun getFileNameFromUri(uri: Uri): String {
-        var displayName = ""
-        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                if (index != -1) {
-                    displayName = cursor.getString(index)
-                }
-            }
-        }
-        return displayName
-    }
-    private fun uploadFileToDatabase(uri: Uri) {
-        val db = FirebaseFirestore.getInstance()
-        val document = db.collection("taskFile").document() // Assuming "taskFiles" is the collection name
-        val fileName = getFileNameFromUri(uri)
-        val fileData = hashMapOf(
-            "fileName" to fileName,
-            "filePath" to uri.toString(),
-            "taskId" to taskName // Assuming taskName is the ID of the task associated with this file
-        )
-
-        document.set(fileData)
-            .addOnSuccessListener {
-                // File information saved successfully to Firestore
-            }
-            .addOnFailureListener { e ->
-                // Handle any errors
-            }
     }
 }

@@ -5,12 +5,12 @@ import android.os.Parcelable
 import com.google.firebase.Timestamp
 
 data class Task(
-    var name: String = "",
-    var description: String? = null,
-    val startDate: Long = 0L,
-    val endDate: Long = 0L,
+    val name: String = "",
+    val description: String? = null,
+    val startDate: Long = 0L, // Change type to Long
+    val endDate: Long = 0L,   // Change type to Long
     var isCompleted: Boolean = false,
-    val taskId: String = ""
+    val resources: List<ResourceItem>? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -44,14 +44,13 @@ data class Task(
             return arrayOfNulls(size)
         }
 
-        // Handle Firebase Timestamp conversion
+        // Function to convert Firestore document data to Task object
         fun toTask(documentId: String, documentData: Map<String, Any>): Task {
             return Task(
-
                 name = documentData["name"] as String? ?: "",
                 description = documentData["description"] as String?,
-                startDate = (documentData["startDate"] as Timestamp).toDate().time,
-                endDate = (documentData["endDate"] as Timestamp).toDate().time,
+                startDate = (documentData["startDate"] as Long?) ?: 0L, // Use Long instead of Timestamp
+                endDate = (documentData["endDate"] as Long?) ?: 0L,     // Use Long instead of Timestamp
                 isCompleted = documentData["isCompleted"] as Boolean? ?: false
             )
         }

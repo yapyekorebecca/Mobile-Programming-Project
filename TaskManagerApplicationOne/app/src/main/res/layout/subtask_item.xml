@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                 />
+                android:buttonTint="@color/purple" />
 
             <!-- Task TextView -->
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/sub"
-                android:textColor="@color/white"
+                android:textColor="@color/purple"
                 android:textSize="18sp"
                 android:paddingStart="12dp"
                 android:paddingEnd="8dp"

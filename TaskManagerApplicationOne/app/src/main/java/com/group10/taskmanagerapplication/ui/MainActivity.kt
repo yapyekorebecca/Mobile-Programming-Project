@@ -1,62 +1,65 @@
 package com.group10.taskmanagerapplication.ui
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
+//import SubTasksActivity
+//import SubTasksActivity
+//import SubTasksActivity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Button
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.group10.taskmanagerapplication.R
-import com.group10.taskmanagerapplication.reminders.channelID
 
-class MainActivity : AppCompatActivity(), TaskAdapter.EditTaskListener,TaskUpdatedCallback {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var tasksRecyclerView: RecyclerView
     private lateinit var taskAdapter: TaskAdapter
-    private lateinit var df: DocumentReference
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
-        createNotificationChannel(this)
 
+        // Initialize Firestore
         firestore = FirebaseFirestore.getInstance()
+
+        // Find the RecyclerView by its ID
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView)
-        val df = firestore.collection("tasks").document("1")
 
+        // Find the add button by its ID
         val addButton: Button = findViewById(R.id.addButton)
-        val tasksList = mutableListOf<Task>()
-        val recyclerView = findViewById<RecyclerView>(R.id.tasksRecyclerView)
 
-        taskAdapter = TaskAdapter(tasksList, this, firestore, recyclerView,this, this,df, this)
+        // Initialize TaskAdapter
+        taskAdapter = TaskAdapter(mutableListOf()) { clickedTask ->
+            // Handle task item click here
+            // For example, start the SubTasksActivity with the task name
+            val intent = Intent(this@MainActivity, SubTasksActivity::class.java)
+            intent.putExtra("taskName", clickedTask.name)
+            startActivity(intent)
+        }
+
+        // Set adapter to RecyclerView
         tasksRecyclerView.adapter = taskAdapter
 
-        val itemTouchHelper = ItemTouchHelper(SwipeToEditCallback(taskAdapter))
-        itemTouchHelper.attachToRecyclerView(tasksRecyclerView)
-
+        // Set onClick listener for the add button
         addButton.setOnClickListener {
-            startActivity(Intent(this@MainActivity, AddTaskActivity::class.java))
+            // Start the AddTaskActivity when the add button is clicked
+            val intent = Intent(this@MainActivity, AddTaskActivity::class.java)
+            startActivity(intent)
         }
     }
 
+
     override fun onResume() {
         super.onResume()
+        // Fetch tasks from Firestore and display them
         fetchAndDisplayTasks()
     }
 
     private fun fetchAndDisplayTasks() {
         // Get reference to the "tasks" collection in Firestore
-        val tasksRef = firestore.collection("tasks").orderBy("createdAt", Query.Direction.DESCENDING)
+        val tasksRef = firestore.collection("tasks")
 
         // Retrieve tasks from Firestore
         tasksRef.get()
@@ -76,31 +79,4 @@ class MainActivity : AppCompatActivity(), TaskAdapter.EditTaskListener,TaskUpdat
                 // Handle errors
             }
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun createNotificationChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Reminder Channel"
-            val descriptionText = "This channel is used for task reminders."
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelID, name, importance).apply {
-                description = descriptionText
-            }
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-
-    override fun onEditTask(task: Task) {
-        val dialog = MyCustomDialog()
-        dialog.show(supportFragmentManager, "MyCustomFragment")
-    }
-
-    override fun onTaskUpdated() {
-        fetchAndDisplayTasks()
-    }
-}
-interface TaskUpdatedCallback {
-    fun onTaskUpdated()
 }
