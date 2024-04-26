@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/mobb"
+    tools:context=".ui.AddSubTaskActivity">
+
+    <!-- Subtask Name -->
+    <EditText
+        android:id="@+id/editTextSubtaskName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/subtask"
+        android:inputType="text"
+        android:textColorHint="#6D4C41"
+        android:autofillHints="date"/>
+
+    <!-- Start Date -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/textViewStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/startDate"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/editTextStartDate"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:focusable="false"
+            android:hint="@string/select_start_date"
+            android:inputType="date"
+            android:textColorHint="#6D4C41"
+            android:autofillHints="date"/>
+
+        <ImageView
+            android:id="@+id/imageViewStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_calendar"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/calendar_icon"/>
+
+    </LinearLayout>
+
+    <!-- End Date -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/textViewEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/endDate"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/editTextEndDate"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:autofillHints="name"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:focusable="false"
+            android:hint="@string/select"
+            android:inputType="date"
+            android:textColorHint="#6D4C41" />
+
+        <ImageView
+            android:id="@+id/imageViewEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_calendar"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/calendar_icon_description"/>
+
+    </LinearLayout>
+
+    <!-- Add Button -->
+    <Button
+        android:id="@+id/buttonAddSubtask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:textSize="20sp"
+        android:layout_marginTop="24dp" />
+
+
+</LinearLayout>

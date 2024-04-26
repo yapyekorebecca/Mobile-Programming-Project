@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:background="@drawable/mobb">
+
+    <!-- Subtask Title -->
+    <TextView
+        android:id="@+id/subtaskTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:text="@string/subtasks"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/Tasks"/>
+
+    <!-- RecyclerView for displaying subtasks -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subtasksRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subtaskTitle"
+        android:layout_marginTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:nestedScrollingEnabled="true" />
+
+    <!-- Add Subtask Button -->
+    <Button
+        android:id="@+id/addSubtaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_subtask"
+        android:layout_below="@id/subtasksRecyclerView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="8dp" />
+
+    <!-- Comments Section with CardView -->
+    <!-- Attach Resources Title -->
+    <TextView
+        android:id="@+id/attachResourcesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/attach_resources"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_below="@id/addSubtaskButton"
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="8dp" />
+
+    <!-- Resource Attachment Icon -->
+    <ImageView
+        android:id="@+id/resourceAttachmentIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_attach_file_24"
+        android:layout_below="@id/attachResourcesTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/attach_resources"/>
+
+    <!-- Space for Attached File -->
+    <TextView
+        android:id="@+id/attachedFileTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:maxLines="3"
+        android:layout_below="@id/resourceAttachmentIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
+
+
+</RelativeLayout>
