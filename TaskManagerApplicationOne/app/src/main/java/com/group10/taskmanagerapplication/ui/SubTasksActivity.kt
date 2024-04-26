@@ -1,26 +1,17 @@
 package com.group10.taskmanagerapplication.ui
 
 import SubtasksAdapter
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
 //import com.google.firebase.firestore.FirebaseFirestore
 import com.group10.taskmanagerapplication.R
 //import com.group10.taskmanagerapplication.ui.SubtasksAdapter
@@ -32,10 +23,7 @@ class SubTasksActivity : AppCompatActivity() {
     private lateinit var addSubtaskButton: Button
     private lateinit var attachmentIcon: ImageView
     private lateinit var adapter: SubtasksAdapter
-    private lateinit var attachedFileTextView: TextView
     private val subtasksList = mutableListOf<String>()
-    private val FILE_URI_KEY = "file_uris_key"
-    private val READ_EXTERNAL_STORAGE_PERMISSION_REQUEST = 100
 
     //private val FILE_PICKER_REQUEST_CODE = 1001
 
@@ -58,12 +46,11 @@ class SubTasksActivity : AppCompatActivity() {
 
     private val filePickerActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                data?.data?.let { uri ->
-                    addSelectedFileUri(uri)
-                }
-            }
+//            if (result.resultCode == Activity.RESULT_OK) {
+//              //  val data: Intent? = result.data
+//              //  val selectedFileUri = data?.data
+//                // Process the selected file URI here, such as displaying it to the user or attaching it to the comment
+//            }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +71,7 @@ class SubTasksActivity : AppCompatActivity() {
         // Find the "Add Subtask" button
         addSubtaskButton = findViewById(R.id.addSubtaskButton)
         // Find the attachment icon ImageView
-        attachmentIcon = findViewById(R.id.resourceAttachmentIcon)
+        attachmentIcon = findViewById(R.id.attachment)
 
         // Set OnClickListener for the "Add Subtask" button
         addSubtaskButton.setOnClickListener {
@@ -137,68 +124,5 @@ class SubTasksActivity : AppCompatActivity() {
                 putStringSet(taskName, it)
             }
         }
-    }
-    private fun addSelectedFileUri(uri: Uri) {
-        val existingUris = sharedPrefs.getStringSet(FILE_URI_KEY, mutableSetOf()) ?: mutableSetOf()
-        existingUris.add(uri.toString())
-        sharedPrefs.edit {
-            putStringSet(FILE_URI_KEY, existingUris)
-        }
-        updateAttachedFilesUI(existingUris)
-
-        // Upload file URI to Firestore
-        uploadFileToDatabase(uri)
-    }
-    private fun updateAttachedFilesUI(uris: Set<String>) {
-        attachedFileTextView.text = ""
-        uris.forEach { uriString ->
-            val uri = Uri.parse(uriString)
-            val fileName = getFileNameFromUri(uri)
-            attachedFileTextView.append("$fileName\n")
-        }
-        attachedFileTextView.visibility = if (uris.isNotEmpty()) View.VISIBLE else View.GONE
-    }
-    private fun requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                READ_EXTERNAL_STORAGE_PERMISSION_REQUEST
-            )
-        }
-    }
-    private fun getFileNameFromUri(uri: Uri): String {
-        var displayName = ""
-        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                if (index != -1) {
-                    displayName = cursor.getString(index)
-                }
-            }
-        }
-        return displayName
-    }
-    private fun uploadFileToDatabase(uri: Uri) {
-        val db = FirebaseFirestore.getInstance()
-        val document = db.collection("taskFile").document() // Assuming "taskFiles" is the collection name
-        val fileName = getFileNameFromUri(uri)
-        val fileData = hashMapOf(
-            "fileName" to fileName,
-            "filePath" to uri.toString(),
-            "taskId" to taskName // Assuming taskName is the ID of the task associated with this file
-        )
-
-        document.set(fileData)
-            .addOnSuccessListener {
-                // File information saved successfully to Firestore
-            }
-            .addOnFailureListener { e ->
-                // Handle any errors
-            }
     }
 }

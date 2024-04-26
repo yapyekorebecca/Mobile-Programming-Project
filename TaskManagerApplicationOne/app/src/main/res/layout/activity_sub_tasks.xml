@@ -43,42 +43,68 @@
         android:layout_marginTop="8dp" />
 
     <!-- Comments Section with CardView -->
-    <!-- Attach Resources Title -->
-    <TextView
-        android:id="@+id/attachResourcesTitle"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/commentsCardView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/attach_resources"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
         android:layout_below="@id/addSubtaskButton"
-        android:layout_alignParentEnd="false"
-        android:layout_marginTop="8dp" />
-
-    <!-- Resource Attachment Icon -->
-    <ImageView
-        android:id="@+id/resourceAttachmentIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_attach_file_24"
-        android:layout_below="@id/attachResourcesTitle"
-        android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
-        android:contentDescription="@string/attach_resources"/>
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
 
-    <!-- Space for Attached File -->
-    <TextView
-        android:id="@+id/attachedFileTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:maxLines="3"
-        android:layout_below="@id/resourceAttachmentIcon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:visibility="gone" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
+            <!-- Comments EditText -->
+            <EditText
+                android:id="@+id/commentsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toStartOf="@id/attachment"
+                android:autofillHints="name"
+                android:hint="@string/Add_Notes"
+                android:inputType="text"
+                android:backgroundTint="@android:color/transparent" />
+
+            <!-- Cancel Button -->
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:layout_below="@id/commentsEditText"
+                android:layout_marginTop="8dp"
+                android:layout_alignParentStart="true" />
+
+            <!-- Comment Button -->
+            <Button
+                android:id="@+id/commentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comment"
+                android:layout_below="@id/commentsEditText"
+                android:layout_marginTop="8dp"
+                android:layout_alignParentEnd="true" />
+
+            <!-- Attachment icon-->
+            <ImageView
+                android:id="@+id/attachment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_attach_file_24"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/Tasks"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

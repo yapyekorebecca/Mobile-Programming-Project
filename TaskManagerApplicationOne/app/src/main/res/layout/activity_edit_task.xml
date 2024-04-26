@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Task Name"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/editDescription"
+        android:layout_below="@id/editTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Description"
+        android:layout_margin="16dp"/>
+
+    <RelativeLayout
+        android:id="@+id/startDateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editDescription">
+
+        <EditText
+            android:id="@+id/editStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:hint="Start Date (YYYY-MM-DD)" />
+
+        <ImageButton
+            android:id="@+id/btnStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Select Start Date"
+            android:src="@drawable/ic_calendar" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/endDateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startDateLayout">
+
+        <EditText
+            android:id="@+id/editEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:hint="End Date (YYYY-MM-DD)" />
+
+        <ImageButton
+            android:id="@+id/btnEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Select End Date"
+            android:src="@drawable/ic_calendar" />
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editEndDate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350dp"
+        android:text="Save"
+        tools:ignore="NotSibling" />
+
+
+</RelativeLayout>
